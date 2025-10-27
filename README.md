@@ -1,61 +1,208 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Course Creation App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel](https://img.shields.io/badge/Laravel-11+-red.svg?style=flat&logo=laravel) ![PHP](https://img.shields.io/badge/PHP-8.1+-8892BF.svg?style=flat&logo=php) ![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1.svg?style=flat&logo=mysql) ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3+-7952B3.svg?style=flat&logo=bootstrap)
 
-## About Laravel
+A Laravel-based application for creating structured online courses with a dynamic nested form. Users can build courses containing modules and various content types (text, links, images, videos). This project demonstrates hierarchical data modeling, file uploads, form validation, and JavaScript-driven UI enhancements.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Project Task Overview**: Developed as part of a course creation system, this app resolves common Laravel challenges like migration errors (e.g., custom primary keys, foreign key constraints), validation for nested arrays, and large file uploads. It includes Tinker-based testing for inserts and relationships.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Current Version**: 1.0.0 (as of October 28, 2025)  
+**Author**: Softvence Team  
+**License**: MIT
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
 
-## Learning Laravel
+- **Course Builder**: Create courses with title, description, category, and feature video (MP4/AVI/MOV, up to 10MB).
+- **Hierarchical Structure**: Courses → Modules (with order) → Contents (text, links, images up to 5MB, videos up to 10MB).
+- **Dynamic Nested Form**: Vanilla JS for adding/removing modules/contents; type-specific fields toggle (e.g., textarea for text, file input for media).
+- **Advanced Validation**: Nested rules with `required_if` for content types; handles empty strings/nulls gracefully.
+- **File Handling**: Secure uploads to public storage; transactions for atomic saves (rollback on failures).
+- **Data Integrity**: Foreign keys with cascade deletes; eager loading to prevent N+1 queries.
+- **Debug & Testing**: Built-in Tinker scripts for hierarchy verification; logging for errors/uploads.
+- **Error Resilience**: Input persistence on validation fails; user-friendly messages (e.g., "Text is required for text-type content").
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Tech Stack
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Backend**: Laravel 11+ (PHP 8.1+), Eloquent ORM (relationships: hasMany/belongsTo).
+- **Database**: MySQL 8.0+ (tables: courses, modules, contents; configurable for SQLite).
+- **Frontend**: Blade views, Bootstrap 5 (styling), Vanilla JS (no frameworks for simplicity).
+- **Storage**: Laravel Filesystem (public disk; media/videos folders).
+- **Tools**: Artisan (migrations, tinker), Composer, NPM (optional for assets).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+### Prerequisites
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- PHP >= 8.1
+- Composer
+- MySQL 8.0+ (or SQLite)
+- Node.js & NPM (optional for custom assets)
 
-### Premium Partners
+### Step 1: Clone & Setup Dependencies
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+git clone <your-repo-url> coursecreation
+cd coursecreation
+composer install
+```
+
+### Step 2: Configure Environment
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+Update `.env`:
+- Database: `DB_CONNECTION=mysql`, `DB_DATABASE=coursecreation`, `DB_USERNAME=root`, `DB_PASSWORD=`.
+- Storage: `FILESYSTEM_DISK=public`.
+- Debug: `APP_DEBUG=true`.
+
+### Step 3: Database & Storage Setup
+
+```bash
+php artisan migrate  # Creates courses, modules, contents tables
+php artisan storage:link  # Symlink for public uploads
+```
+
+**Migration Notes**: If errors occur (e.g., "course_id does not exist"), rollback (`php artisan migrate:rollback --step=1`) and use standard `$table->id()` for primary keys.
+
+### Step 4: Assets (Optional)
+
+Using CDN for Bootstrap/JS; for local:
+```bash
+npm install
+npm run dev
+```
+
+### Step 5: Launch
+
+```bash
+php artisan serve
+```
+
+Access: `http://127.0.0.1:8000/create-course`.
+
+## Usage
+
+### Building a Course
+
+1. **Form Access**: GET `/create-course` (renders Blade view with dynamic form).
+2. **Course Details**: Fill title (required), description/category (optional), upload feature video.
+3. **Add Modules**: Start with Module 1; click "+ Add Module" for more (each has title & order).
+4. **Add Contents**: Per module, click "+ Add Content"; select type:
+   - **Text**: Required textarea (string, max 65KB).
+   - **Link**: Required URL input (validated).
+   - **Image**: Required file (JPEG/PNG/GIF, max 5MB).
+   - **Video**: Required file (MP4/AVI/MOV, max 10MB).
+5. **Submit**: POST `/create-course` → Validates, saves atomically, redirects to `/courses/{id}`.
+6. **View**: GET `/courses/{id}` displays full hierarchy (e.g., Course > Modules > Contents).
+
+### Key Routes (web.php)
+
+```php
+Route::get('/create-course', [CourseController::class, 'create'])->name('courses.create');
+Route::post('/create-course', [CourseController::class, 'store'])->name('courses.store');
+Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+```
+
+## Project Task Implementation Highlights
+
+- **Migrations**: Fixed `BadMethodCallException` by using `$table->id()`; added foreign keys with `constrained()->onDelete('cascade')`.
+- **Models**: Fillable arrays; relationships (e.g., `Course::hasMany(Module::class)`).
+- **Controller**: `CourseController@store` uses `Validator::make` for nested rules, `DB::transaction` for saves, file storage via `store('media', 'public')`.
+- **View**: `create.blade.php` with JS for dynamic fields (add/remove, type toggles); error display via `@errors`.
+- **Validation Fixes**: `nullable` + `required_if` for content fields; safeguards against non-string inputs.
+- **Uploads**: Handle large POSTs (`php.ini: post_max_size=50M`); transactions prevent partial saves.
+- **Testing**: Tinker for inserts (`Course::create([...])`); manual verification of hierarchy.
+
+## Testing
+
+### Feature Tests
+
+```bash
+php artisan test
+```
+
+Example in `tests/Feature/CourseCreationTest.php`:
+```php
+public function test_course_with_nested_content()
+{
+    $response = $this->post(route('courses.store'), [
+        'title' => 'Test Course',
+        'modules' => [
+            [
+                'title' => 'Module 1',
+                'contents' => [
+                    ['type' => 'text', 'text' => 'Hello World']
+                ]
+            ]
+        ]
+    ]);
+
+    $response->assertRedirect();
+    $this->assertDatabaseHas('courses', ['title' => 'Test Course']);
+    $this->assertDatabaseHas('contents', ['data' => 'Hello World']);
+}
+```
+
+### Tinker Verification
+
+```bash
+php artisan tinker
+```
+```php
+use App\Models\Course;
+$course = Course::create(['title' => 'Tinker Course']);
+$module = $course->modules()->create(['title' => 'Tinker Module', 'order' => 1]);
+$module->contents()->create(['type' => 'text', 'data' => 'Test Data', 'order' => 1]);
+Course::with('modules.contents')->find($course->id)->toArray();  // Dump hierarchy
+```
+
+## Configuration & Customization
+
+- **Migrations**: Edit `database/migrations/` for extras (e.g., `$table->softDeletes()`).
+- **Models**: `app/Models/`—add scopes (e.g., `Module::orderBy('order')`).
+- **Views**: `resources/views/create.blade.php` (form); `course/show.blade.php` (display).
+- **Validation**: Extend in `CourseController` (e.g., add price field).
+- **PHP.ini Tweaks**: For uploads: `upload_max_filesize=50M`, `max_execution_time=300`; restart server.
+- **Extend**: Add auth (`php artisan make:auth`), API routes, or queues for uploads.
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| **"Modules field required"** | Check form names (`modules[0][title]`); ensure JS runs (no console errors). |
+| **Upload 413 Error** | Set `php.ini`: `post_max_size=50M`; restart `php artisan serve`. |
+| **"Must be a string" Validation** | Use `nullable` in rules; ensure JS textareas default to `''`. |
+| **Files Not Visible** | Run `php artisan storage:link`; access via `asset('storage/media/file.jpg')`. |
+| **Migration Fail (e.g., course_id)** | Use `$table->id()`; rollback: `php artisan migrate:rollback --step=1`. |
+| **Empty Hierarchy** | Verify relationships in models; use Tinker to test inserts. |
+
+Logs: `tail -f storage/logs/laravel.log`.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+1. Fork the repo.
+2. Branch: `git checkout -b feature/your-task`.
+3. Commit: `git commit -m "Add your-task"`.
+4. Push: `git push origin feature/your-task`.
+5. PR: Open against `main`.
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Focus: Security, tests (`php artisan test`), docs.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT License—see [LICENSE](LICENSE).
+
+## Acknowledgments
+
+- [Laravel Framework](https://laravel.com) for core magic.
+- Bootstrap for responsive UI.
+- Community fixes for migrations/validation (e.g., foreign key constraints).
+
+---
+
+*Last Updated: October 28, 2025*  
+*Project Task Credits: Built during Laravel course development.*  
+*Issues? [GitHub Issues](https://github.com/yourusername/coursecreation/issues).*

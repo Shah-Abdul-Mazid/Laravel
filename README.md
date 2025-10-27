@@ -7,7 +7,7 @@ A Laravel-based application for creating structured online courses with a dynami
 **Project Task Overview**: Developed as part of a course creation system, this app resolves common Laravel challenges like migration errors (e.g., custom primary keys, foreign key constraints), validation for nested arrays, and large file uploads. It includes Tinker-based testing for inserts and relationships.
 
 **Current Version**: 1.0.0 (as of October 28, 2025)  
-**Author**: Softvence Team  
+**Author**: Shah Abdul Mazid  
 **License**: MIT
 
 ## Features
@@ -204,5 +204,5 @@ MIT License—see [LICENSE](LICENSE).
 ---
 
 *Last Updated: October 28, 2025*  
-*Project Task Credits: Built during Laravel course development.*  
+*Project Task Credits: Built during Laravel course development by Shah Abdul Mazid.*  
 *Issues? [GitHub Issues](https://github.com/yourusername/coursecreation/issues).*

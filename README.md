@@ -206,3 +206,23 @@ MIT License—see [LICENSE](LICENSE).
 *Last Updated: October 28, 2025*  
 *Project Task Credits: Built during Laravel course development by Shah Abdul Mazid.*  
 *Issues? [GitHub Issues](https://github.com/yourusername/coursecreation/issues).*
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/81e366c7-3611-4146-8813-15ddb97f7731" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/6408e745-e5e6-45be-b6c9-5eb67d4ae407" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/5eb93a95-1626-4835-b40d-f96797e78eb4" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/f3e7c416-f83a-4b36-b9ba-71d39c44003c" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/e2d78f22-dc0a-4907-ab75-f85d1be8bc2f" />
+
+<img width="2560" height="1600" alt="image" src="https://github.com/user-attachments/assets/2604cb72-aaad-4e19-b2bb-aead7c340aba" />
+
+
+
+
+
+
+
+
